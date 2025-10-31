@@ -16,9 +16,9 @@ public abstract class Main
 	 ***********************************************************/
 	public static void main(String[] args) throws IOException
 	{
-		Price regularPrice = new Price(Price.Code.REGULAR);
-		Price childrensPrice = new Price(Price.Code.CHILDRENS);
-		Price newReleasePrice = new Price(Price.Code.NEW_RELEASE);
+		Price regularPrice = new RegularPrice();
+		Price childrensPrice = new ChildrensPrice();
+		Price newReleasePrice = new NewReleasePrice();
 		
 		Customer who = new Customer("Barack Obama");
 		Movie m1 = new Movie("Life of Amalia", regularPrice);
