@@ -1,33 +1,27 @@
 package v1;
 
-public class Rental
-{
-	private Movie	_movie;
-	private int		_daysRented;
+public class Rental {
+	private Movie _movie;
+	private int _daysRented;
 
-	public Rental(Movie movie, int daysRented)
-	{
+	public Rental(Movie movie, int daysRented) {
 		_movie = movie;
 		_daysRented = daysRented;
 	}
 
-	public int getDaysRented()
-	{
+	public int getDaysRented() {
 		return _daysRented;
 	}
 
-	public Movie getMovie()
-	{
+	public Movie getMovie() {
 		return _movie;
 	}
 
-	public double getAmount()
-	{
+	public double getAmount() {
 		double result = 0;
 
 		// determine amounts for each line
-		switch (this.getMovie().getPriceCode())
-		{
+		switch (this.getMovie().getPriceCode()) {
 			case REGULAR:
 				result += 2;
 				if (this.getDaysRented() > 2)
