@@ -2,72 +2,59 @@ package v6;
 
 import java.util.Vector;
 
-public class Customer
-{
-	private String			_name;
-	private Vector<Rental>	_rentals	= new Vector<Rental>();
+public class Customer {
+    private String _name;
+    private Vector<Rental> _rentals = new Vector<>();
 
-	public Customer(String _name)
-	{
-		this._name = _name;
-	}
+    public Customer(String name) {
+        _name = name;
+    }
 
-	public void addRental(Rental arg)
-	{
-		_rentals.addElement(arg);
-	}
+    public void addRental(Rental arg) {
+        _rentals.addElement(arg);
+    }
 
-	public String getName()
-	{
-		return _name;
-	}
+    public String getName() { return _name; }
 
-	public String statement()
-	{
-		// header
-		String result = "Rental Record for " + getName() + "\n";
+    // ——— Helper: Total Charge ———
+    public double getTotalCharge() {
+        double total = 0;
+        for (Rental rental : _rentals) {
+            total += rental.getCharge();
+        }
+        return total;
+    }
 
-		for (Rental each : _rentals)
-			result += "\t" + each.getMovie().getTitle() + "\t" + each.getAmount() + "\n";
+    // ——— Helper: Total Points ———
+    public int getTotalFrequentRenterPoints() {
+        int total = 0;
+        for (Rental rental : _rentals) {
+            total += rental.getFrequentRenterPoints();
+        }
+        return total;
+    }
 
-		// add footer lines
-		result += "Amount owed is " + getTotalAmount() + "\n";
-		result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
-		return result;
-	}
+    // ——— Text Statement ———
+    public String statement() {
+        String result = "Rental Record for " + getName() + "\n";
+        for (Rental rental : _rentals) {
+            result += "\t" + rental.getMovie().getTitle() + "\t" + rental.getCharge() + "\n";
+        }
+        result += "Amount owed is " + getTotalCharge() + "\n";
+        result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
+        return result;
+    }
 
-	public String htmlStatement()
-	{
-		// header
-		String result = "<font size=\"5\" face=\"Georgia, Arial, Garamond\" color=\"green\">\n";
-		result += "<h2>Rental Record for <i>" + getName() + "</i></h2>\n";
-
-		result += "<ul>\n";
-		for (Rental each : _rentals)
-			result += "\t<li>" + each.getMovie().getTitle() + "\t" + each.getAmount()+"\n";
-		result += "</ul>\n";
-
-		// add footer lines
-		result += "Amount owed is " + getTotalAmount() + "<br>\n";
-		result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points<br>\n";
-		result += "</font>\n";
-		
-		return result;
-	}
-
-	public int getTotalFrequentRenterPoints()
-	{
-		int frequentRenterPoints = 0;
-		for (Rental each : _rentals)
-			frequentRenterPoints += each.getFrequentRentalPoints();
-		return frequentRenterPoints;
-	}
-
-	public double getTotalAmount()
-	{
-		double totalAmount = 0;
-		for (Rental each : _rentals)
-			totalAmount += each.getAmount();
-		return totalAmount;
-	}
+    // ——— HTML Statement (Easy!) ———
+    public String htmlStatement() {
+        String result = "<h1>Rental Record for <em>" + getName() + "</em></h1>\n";
+        result += "<table>\n";
+        for (Rental rental : _rentals) {
+            result += "  <tr><td>" + rental.getMovie().getTitle() + "</td><td>" + rental.getCharge() + "</td></tr>\n";
+        }
+        result += "</table>\n";
+        result += "<p>Amount owed is <strong>" + getTotalCharge() + "</strong></p>\n";
+        result += "<p>You earned <strong>" + getTotalFrequentRenterPoints() + "</strong> frequent renter points</p>";
+        return result;
+    }
 }
